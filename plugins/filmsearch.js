@@ -1,23 +1,40 @@
 const axios = require('axios');
 const { cmd } = require('../command');
+const { fetchJson } = require('../lib/functions');
 
+// -----------------------------------------------------------------------------
 cmd({
     pattern: "movie",
     category: "search",
     desc: "Sends image of asked Movie/Series.",
     use: '<movie_name>',
     filename: __filename,
-}, async (conn, m, { from, quoted, body, args, reply }) => {
+},
+    async (conn, mek, m, {
+    from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, 
+    botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, 
+    participants, groupAdmins, isBotAdmins, isAdmins, reply
+}) => {
+    
     try {
-        const q = args.join(" ").trim();
+        // Ensure q captures the movie name
+        q = args.join(" ").trim();
+
+        // Check if movie name is provided
         if (!q) {
             return reply(`*Please provide a movie name* ❗`);
         }
-        const fids = await axios.get(`https://www.omdbapi.com/?apikey=742b2d09&t=${q}&plot=full`);
+
+        // Fetch movie data from OMDB API
+        let fids = await axios.get(`https://www.omdbapi.com/?apikey=742b2d09&t=${q}&plot=full`);
+
+        // Handle if movie is not found
         if (fids.data.Response === "False") {
             return reply(`*Movie not found* ❗`);
         }
-        let imdbt = "╭─────────────────╮\n    𝗠𝗢𝗩𝗜𝗘 𝗜𝗡𝗙𝗢\n╰─────────────────╯\n";
+
+        // Formatting movie data
+        let imdbt = "╭─────────────────╮\n    𝗠𝗼𝘃𝗶𝗲 𝗶𝗻𝗳𝗼\n╰─────────────────╯\n";
         imdbt += `🎬 Title      : ${fids.data.Title}\n\n`;
         imdbt += `📅 Year       : ${fids.data.Year}\n\n`;
         imdbt += `⭐ Rated      : ${fids.data.Rated}\n\n`;
@@ -35,19 +52,22 @@ cmd({
         imdbt += `🏙️ Production : ${fids.data.Production}\n\n`;
         imdbt += `🌟 imdbRating : ${fids.data.imdbRating}\n\n`;
         imdbt += `❎ imdbVotes  : ${fids.data.imdbVotes}`;
-        const cap = "𝗚𝗲𝟆𝗮𝗿𝗮𝐭𝗲𝙙 𝝗𝞤 𝗘ꟾ𝖎✘𝗮 ‐𝝡𝗗༺";
+
+        // Check if the poster exists
         const posterUrl = fids.data.Poster !== "N/A" ? fids.data.Poster : null;
+
+        // Send movie info with or without poster
         if (posterUrl) {
-            await conn.sendMessage(from, {
+            await conn.sendMessage(m.chat, {
                 image: { url: posterUrl },
-                caption: `${imdbt}\n${cap}`,
+                caption: imdbt,
             }, { quoted: m });
         } else {
-            await conn.sendMessage(from, { text: `${imdbt}\n${cap}` }, { quoted: m });
+            await conn.sendMessage(m.chat, { text: imdbt }, { quoted: m });
         }
+
     } catch (error) {
         console.error(error);
         reply(`*An error occurred while fetching the movie info* ❗`);
     }
 });
-
