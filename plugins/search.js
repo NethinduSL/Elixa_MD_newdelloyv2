@@ -69,3 +69,39 @@ cmd({
         reply(`*An error occurred while fetching the movie info* ❗`);
     }
 });
+
+
+
+
+//╭──────────────────────Google──────────────────────╮//
+
+
+
+
+cmd({
+            pattern: "google",
+            category: "search",
+            desc: "Sends info of given query from Google Search.",
+            use: '<text>',
+            filename: __filename,
+        },
+    async (conn, m, {
+    from, quoted, body, args, reply
+}) => {
+        
+            if (!q) throw `Example : .Google Elixa md`
+            let google = require('google-it')
+            google({ 'query': q }).then(res => {
+                let text = `Google Search From : ${q}\n\n`
+                for (let g of res) {
+                    text += `➣ *Title* : ${g.title}\n`
+                    text += `➣ *Description* : ${g.snippet}\n`
+                    text += `➣ *Link* : ${g.link}\n\n────────────────────────\n\n`
+                }
+                citel.reply(text)
+            })
+
+        }
+    )
+
+
