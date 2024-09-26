@@ -9,7 +9,12 @@ cmd({
     desc: "Sends image of asked Movie/Series.",
     use: '<movie_name>',
     filename: __filename,
-}, async (conn, m, { q, reply }) => { // Adjusted function signature
+},
+    async (conn, mek, m, {
+    from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, 
+    botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, 
+    participants, groupAdmins, isBotAdmins, isAdmins, reply
+}) => {
     
     try {
         // Fetch movie data
