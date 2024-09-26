@@ -1,25 +1,19 @@
 const axios = require('axios');
 const { cmd } = require('../command');
-const { fetchJson } = require('../lib/functions');
 
-// -----------------------------------------------------------------------------
 cmd({
     pattern: "movie",
     category: "search",
     desc: "Sends image of asked Movie/Series.",
-    react:"🎞️"
     use: '<movie_name>',
     filename: __filename,
-},
-    async (conn, mek, m, {
-    from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, 
-    botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, 
-    participants, groupAdmins, isBotAdmins, isAdmins, reply
+}, async (conn, m, {
+    from, quoted, body, args, reply
 }) => {
     
     try {
-        // Ensure q captures the movie name
-        q = args.join(" ").trim();
+        // Ensure 'q' captures the movie name
+        const q = args.join(" ").trim();
 
         // Check if movie name is provided
         if (!q) {
@@ -27,7 +21,7 @@ cmd({
         }
 
         // Fetch movie data from OMDB API
-        let fids = await axios.get(`https://www.omdbapi.com/?apikey=742b2d09&t=${q}&plot=full`);
+        const fids = await axios.get(`https://www.omdbapi.com/?apikey=742b2d09&t=${q}&plot=full`);
 
         // Handle if movie is not found
         if (fids.data.Response === "False") {
@@ -35,7 +29,7 @@ cmd({
         }
 
         // Formatting movie data
-        let imdbt = "╭─────────────────╮\n   𝗠𝗢𝗩𝗜𝗘 𝗜𝗡𝗙𝗢\n╰─────────────────╯\n";
+        let imdbt = "╭─────────────────╮\n    𝗠𝗢𝗩𝗜𝗘 𝗜𝗡𝗙𝗢\n╰─────────────────╯\n";
         imdbt += `🎬 Title      : ${fids.data.Title}\n\n`;
         imdbt += `📅 Year       : ${fids.data.Year}\n\n`;
         imdbt += `⭐ Rated      : ${fids.data.Rated}\n\n`;
@@ -53,19 +47,21 @@ cmd({
         imdbt += `🏙️ Production : ${fids.data.Production}\n\n`;
         imdbt += `🌟 imdbRating : ${fids.data.imdbRating}\n\n`;
         imdbt += `❎ imdbVotes  : ${fids.data.imdbVotes}`;
-         "> 𝗚𝗲𝟆𝗮𝗿𝗮𝐭𝗲𝙙 𝝗𝞤 𝗘ꟾ𝖎✘𝗮 ‐𝝡𝗗༺";
+        
+        // Create the variable 'cap' with the specified string
+        const cap = "𝗚𝗲𝟆𝗮𝗿𝗮𝐭𝗲𝙙 𝝗𝞤 𝗘ꟾ𝖎✘𝗮 ‐𝝡𝗗༺";
         
         // Check if the poster exists
         const posterUrl = fids.data.Poster !== "N/A" ? fids.data.Poster : null;
 
         // Send movie info with or without poster
         if (posterUrl) {
-            await conn.sendMessage(m.chat, {
+            await conn.sendMessage(from, {
                 image: { url: posterUrl },
-                caption: imdbt,
+                caption: `${imdbt}\n${cap}`, // Add 'cap' to the caption
             }, { quoted: m });
         } else {
-            await conn.sendMessage(m.chat, { text: imdbt }, { quoted: m });
+            await conn.sendMessage(from, { text: `${imdbt}\n${cap}` }, { quoted: m });
         }
 
     } catch (error) {
