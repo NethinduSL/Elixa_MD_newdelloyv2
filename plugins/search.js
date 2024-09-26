@@ -1,5 +1,6 @@
 const axios = require('axios');
 const { cmd } = require('../command');
+let gis = require("g-i-s");
 
 cmd({
     pattern: "movie",
