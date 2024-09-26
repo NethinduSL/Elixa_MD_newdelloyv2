@@ -7,6 +7,7 @@ cmd({
     pattern: "movie",
     category: "search",
     desc: "Sends image of asked Movie/Series.",
+    react:"🎞️"
     use: '<movie_name>',
     filename: __filename,
 },
@@ -34,7 +35,7 @@ cmd({
         }
 
         // Formatting movie data
-        let imdbt = "╭─────────────────╮\n𝗠𝗢𝗩𝗜𝗘 𝗜𝗡𝗙𝗢\n╰─────────────────╯\n";
+        let imdbt = "╭─────────────────╮\n   𝗠𝗢𝗩𝗜𝗘 𝗜𝗡𝗙𝗢\n╰─────────────────╯\n";
         imdbt += `🎬 Title      : ${fids.data.Title}\n\n`;
         imdbt += `📅 Year       : ${fids.data.Year}\n\n`;
         imdbt += `⭐ Rated      : ${fids.data.Rated}\n\n`;
@@ -52,7 +53,8 @@ cmd({
         imdbt += `🏙️ Production : ${fids.data.Production}\n\n`;
         imdbt += `🌟 imdbRating : ${fids.data.imdbRating}\n\n`;
         imdbt += `❎ imdbVotes  : ${fids.data.imdbVotes}`;
-         "> 𝗚𝗲𝟆𝗮𝗿𝗮𝐭𝗲𝙙 𝝗𝞤 𝗘ꟾ𝖎✘𝗮 ‐𝝡𝗗༺"
+         "> 𝗚𝗲𝟆𝗮𝗿𝗮𝐭𝗲𝙙 𝝗𝞤 𝗘ꟾ𝖎✘𝗮 ‐𝝡𝗗༺";
+        
         // Check if the poster exists
         const posterUrl = fids.data.Poster !== "N/A" ? fids.data.Poster : null;
 
