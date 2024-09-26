@@ -15,7 +15,7 @@ cmd({
 
     try {
         // Fetch movie data
-        let fids = await axios.get(`http://www.omdbapi.com/?apikey=742b2d09&t=${text}&plot=full`);
+        let fids = await axios.get(`https://www.omdbapi.com/?apikey=742b2d09&t=${text}&plot=full`);
 
         if (fids.data.Response === "False") {
             return citel.reply(`*Movie not found* ❗`);
