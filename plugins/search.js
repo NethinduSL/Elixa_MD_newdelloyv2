@@ -7,7 +7,6 @@ cmd({
     category: "search",
     desc: "Sends image of asked Movie/Series.",
     use: '<movie_name>',
-    react: "🎞️",
     filename: __filename,
 }, async (conn, m, { q, reply }) => { // Adjusted function signature
     
@@ -46,8 +45,14 @@ cmd({
         const posterUrl = fids.data.Poster !== "N/A" ? fids.data.Poster : null;
 
         // Send movie info with or without poster
-        await conn.sendMessage(m.chat, { text: imdbt }, { quoted: m });
-        
+        if (posterUrl) {
+            await conn.sendMessage(m.chat, {
+                image: { url: posterUrl },
+                caption: imdbt,
+            }, { quoted: m });
+        } else {
+            await conn.sendMessage(m.chat, { text: imdbt }, { quoted: m });
+        }
 
     } catch (error) {
         console.error(error);
