@@ -17,7 +17,15 @@ cmd({
 }) => {
     
     try {
-        // Fetch movie data
+        // Ensure q captures the movie name
+        q = args.join(" ").trim();
+
+        // Check if movie name is provided
+        if (!q) {
+            return reply(`*Please provide a movie name* ❗`);
+        }
+
+        // Fetch movie data from OMDB API
         let fids = await axios.get(`https://www.omdbapi.com/?apikey=742b2d09&t=${q}&plot=full`);
 
         // Handle if movie is not found
@@ -26,7 +34,7 @@ cmd({
         }
 
         // Formatting movie data
-        let imdbt = "╭─────────────────╮\n``` Movie info```\n╰─────────────────╯\n";
+        let imdbt = "╭─────────────────╮\n𝗠𝗢𝗩𝗜𝗘 𝗜𝗡𝗙𝗢\n╰─────────────────╯\n";
         imdbt += `🎬 Title      : ${fids.data.Title}\n\n`;
         imdbt += `📅 Year       : ${fids.data.Year}\n\n`;
         imdbt += `⭐ Rated      : ${fids.data.Rated}\n\n`;
@@ -44,7 +52,7 @@ cmd({
         imdbt += `🏙️ Production : ${fids.data.Production}\n\n`;
         imdbt += `🌟 imdbRating : ${fids.data.imdbRating}\n\n`;
         imdbt += `❎ imdbVotes  : ${fids.data.imdbVotes}`;
-
+         "> 𝗚𝗲𝟆𝗮𝗿𝗮𝐭𝗲𝙙 𝝗𝞤 𝗘ꟾ𝖎✘𝗮 ‐𝝡𝗗༺"
         // Check if the poster exists
         const posterUrl = fids.data.Poster !== "N/A" ? fids.data.Poster : null;
 
