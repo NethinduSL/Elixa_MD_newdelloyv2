@@ -1,5 +1,6 @@
 const axios = require('axios');
 const { cmd } = require('../command');
+const { fetchJson } = require('../lib/functions');
 
 // -----------------------------------------------------------------------------
 cmd({
@@ -10,8 +11,6 @@ cmd({
     filename: __filename,
 }, async (conn, m, { q, reply }) => { // Adjusted function signature
     
-    if (!q) return reply(`*Please give me a movie name* ❗`);
-
     try {
         // Fetch movie data
         let fids = await axios.get(`https://www.omdbapi.com/?apikey=742b2d09&t=${q}&plot=full`);
