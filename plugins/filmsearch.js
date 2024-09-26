@@ -51,33 +51,3 @@ cmd({
     }
 });
 
-//╭──────────────────────Google──────────────────────╮//
-
-
-
-cmd({
-    pattern: "google",
-    category: "search",
-    desc: "Sends info of given query from Google Search.",
-    use: '<text>',
-    filename: __filename,
-}, async (conn, m, { from, quoted, body, args, reply }) => {
-    try {
-        const q = args.join(" ").trim();
-        if (!q) {
-            return reply(`*Please provide a search query* ❗`);
-        }
-        let google = require('google-it');
-        const res = await google({ 'query': q });
-        let text = `Google Search Results for: ${q}\n\n`;
-        for (let g of res) {
-            text += `➣ *Title* : ${g.title}\n`;
-            text += `➣ *Description* : ${g.snippet}\n`;
-            text += `➣ *Link* : ${g.link}\n\n────────────────────────\n\n`;
-        }
-        await reply(text);
-    } catch (error) {
-        console.error(error);
-        reply(`*An error occurred while searching on Google* ❗`);
-    }
-});
