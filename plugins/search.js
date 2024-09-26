@@ -1,29 +1,29 @@
-const axios = require('axios');  // Added missing axios import
-const config = require('../config');
-const { cmd, commands } = require('../command');
+const axios = require('axios');
+const { cmd } = require('../command');
 
 // -----------------------------------------------------------------------------
 cmd({
     pattern: "movie",
     category: "search",
     desc: "Sends image of asked Movie/Series.",
-    use: '<text>',
+    use: '<movie_name>',
     react: "🎞️",
     filename: __filename,
-}, async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+}, async (conn, m, { q, reply }) => { // Adjusted function signature
     
-    if (!q) return citel.reply(`*Please give me a movie name* ❗`);
+    if (!q) return reply(`*Please give me a movie name* ❗`);
 
     try {
         // Fetch movie data
         let fids = await axios.get(`https://www.omdbapi.com/?apikey=742b2d09&t=${q}&plot=full`);
 
+        // Handle if movie is not found
         if (fids.data.Response === "False") {
-            return citel.reply(`*Movie not found* ❗`);
+            return reply(`*Movie not found* ❗`);
         }
 
         // Formatting movie data
-        let imdbt = "╭─────────────────╮\n``` Movie info```\n╰─────────────────╯\n> 𝗚𝗲𝟆𝗮𝗿𝗮𝐭𝗲𝙙 𝝗𝞤 𝗘ꟾ𝖎✘𝗮 ‐𝝡𝗗༺\n";
+        let imdbt = "╭─────────────────╮\n``` Movie info```\n╰─────────────────╯\n";
         imdbt += `🎬 Title      : ${fids.data.Title}\n\n`;
         imdbt += `📅 Year       : ${fids.data.Year}\n\n`;
         imdbt += `⭐ Rated      : ${fids.data.Rated}\n\n`;
@@ -47,16 +47,16 @@ cmd({
 
         // Send movie info with or without poster
         if (posterUrl) {
-            await Void.sendMessage(citel.chat, {
+            await conn.sendMessage(m.chat, {
                 image: { url: posterUrl },
                 caption: imdbt,
-            }, { quoted: citel });
+            }, { quoted: m });
         } else {
-            await Void.sendMessage(citel.chat, { text: imdbt }, { quoted: citel });
+            await conn.sendMessage(m.chat, { text: imdbt }, { quoted: m });
         }
 
     } catch (error) {
         console.error(error);
-        citel.reply(`*An error occurred while fetching the movie info* ❗`);
+        reply(`*An error occurred while fetching the movie info* ❗`);
     }
 });
