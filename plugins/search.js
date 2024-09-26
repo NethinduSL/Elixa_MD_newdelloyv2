@@ -10,12 +10,13 @@ cmd({
     use: '<text>',
     react: "🎞️",
     filename: __filename,
-}, async (Void, citel, text) => {
-    if (!text) return citel.reply(`*Please give me a movie name* ❗`);
+}, async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+    
+    if (!q) return citel.reply(`*Please give me a movie name* ❗`);
 
     try {
         // Fetch movie data
-        let fids = await axios.get(`https://www.omdbapi.com/?apikey=742b2d09&t=${text}&plot=full`);
+        let fids = await axios.get(`https://www.omdbapi.com/?apikey=742b2d09&t=${q}&plot=full`);
 
         if (fids.data.Response === "False") {
             return citel.reply(`*Movie not found* ❗`);
