@@ -53,7 +53,7 @@ cmd({
         imdbt += `❎ imdbVotes  : ${fids.data.imdbVotes}`;
 
 
-        let cap="🎞️ /n > 𝗚𝗲𝟆𝗮𝗿𝗮𝐭𝗲𝙙 𝝗𝞤 𝗘ꟾ𝖎✘𝗮 ‐𝝡𝗗༺"
+        let cap="\n > 𝗚𝗲𝟆𝗮𝗿𝗮𝐭𝗲𝙙 𝝗𝞤 𝗘ꟾ𝖎✘𝗮 ‐𝝡𝗗༺"
         
         // Check if the poster exists
         const posterUrl = fids.data.Poster !== "N/A" ? fids.data.Poster : null;
