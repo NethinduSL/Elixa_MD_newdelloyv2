@@ -1,4 +1,4 @@
-const { dare, truth, random_question } = require('../lib/Elixalove.js');
+const { dare, truth, random_question } = require('../lib/truth-dare.js');
 const axios = require('axios');
 const { cmd } = require('../lib');
 
@@ -215,4 +215,31 @@ cmd({
         filename: __filename,
     },
     async (conn, mek, m, {
-        from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber
+        from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, 
+        botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, 
+        participants, groupAdmins, isBotAdmins, isAdmins, reply
+    }) => {
+        try {
+            let response = await axios.get('https://api.popcat.xyz/wyr');
+            let data = response.data;
+            if (data && data.ops1 && data.ops2) {
+                let imageUrl = 'https://telegra.ph/file/b7861f3b2d9136fb78295.jpg';
+                return conn.sendMessage(m.chat, {
+                    text: `*Would You Rather:*\n1. ${data.ops1}\n2. ${data.ops2}`,
+                    contextInfo: {
+                        externalAdReply: {
+                            title: "Would You Rather",
+                            body: 'Powered by IZUKU-MD',
+                            renderLargerThumbnail: true,
+                            thumbnail: { url: imageUrl },
+                        }
+                    }
+                });
+            } else {
+                return reply('*No question found.*');
+            }
+        } catch (error) {
+            return reply(`*An error occurred:* ${error.message || error}`);
+        }
+    }
+});
