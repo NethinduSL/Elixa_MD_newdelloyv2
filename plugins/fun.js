@@ -15,7 +15,7 @@ cmd({
         participants, groupAdmins, isBotAdmins, isAdmins, reply
     }) => {
         const { data } = await axios.get(`https://nekos.life/api/v2/fact`);
-        return reply(`*Fact:* ${data.fact}\n\n*Powered by IZUKU*`);
+        return reply(`*Fact:* ${data.fact}\n\n> 𝗚𝗲𝟆𝗮𝗿𝗮𝐭𝗲𝙙 𝝗𝞤 𝗘ꟾ𝖎✘𝗮 ‐𝝡𝗗༺`);
     }
 );
 
