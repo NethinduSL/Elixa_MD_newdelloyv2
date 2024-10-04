@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { cmd } = require('../lib');
+const { cmd, commands } = require('../command');
 
 //╭──────────────────────fact──────────────────────╮//
 
