@@ -1,3 +1,8 @@
+const axios = require('axios');
+const { cmd } = require('../lib');
+
+//╭──────────────────────fact──────────────────────╮//
+
 cmd({
         pattern: "fact",
         desc: "Sends a fact in chat.",
@@ -14,7 +19,7 @@ cmd({
     }
 );
 
-
+//╭──────────────────────fact──────────────────────╮//
 
 
 
