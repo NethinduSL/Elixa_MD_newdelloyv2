@@ -1,1 +1,20 @@
+cmd({
+        pattern: "fact",
+        desc: "Sends a fact in chat.",
+        category: "fun",
+        filename: __filename,
+    },
+    async (conn, mek, m, {
+        from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, 
+        botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, 
+        participants, groupAdmins, isBotAdmins, isAdmins, reply
+    }) => {
+        const { data } = await axios.get(`https://nekos.life/api/v2/fact`);
+        return reply(`*Fact:* ${data.fact}\n\n*Powered by IZUKU*`);
+    }
+);
+
+
+
+
 
