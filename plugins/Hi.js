@@ -1,33 +1,20 @@
-
-
-
-const config = require('../config');
-const { cmd, commands } = require('../command');
+const { cmd } = require('../command');
 const axios = require('axios');
 
 cmd({
-        pattern: "hi",
+        pattern: "Nethindu",
         desc: "Sends info about repo.",
         category: "general",
-        react: "👍",  // Assuming you still want the reaction; if not, remove this line.
         filename: __filename,
     },
     async (Void, citel) => {
-        try {
-            let { data } = await axios.get('https://raw.githubusercontent.com/Eboxsl/ELAUTO/refs/heads/main/publicconfig.js');
-            let msg = `
-            ╭────Repo of ELIXA───────
-            │*ELIXA MD* is a command-based 
-            │WhatsApp bot built with Node.js,
-            │designed for efficient automation,
-            │chat management, and easy interaction 
-            │through customizable commands.
-            ╰──────────────────────
-            ──𝗡𝗮𝗺𝗲:  ${data.hi}
-            `;
+        let { data } = await axios.get('https://raw.githubusercontent.com/Eboxsl/ELAUTO/refs/heads/main/publicconfig.js');
+        let match = data.match(/{.*}/s);  // Extracts JSON-like object
+
+        if (match) {
+            let parsedData = JSON.parse(match[0]);  // Parse extracted object
+            let msg = `${parsedData.Nethindu}`;
             await citel.reply(msg);
-        } catch (error) {
-            await citel.reply('Failed to fetch repository details.');
         }
     }
 );
