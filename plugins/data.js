@@ -13,7 +13,7 @@ cmd({
 
         if (match) {
             let parsedData = JSON.parse(match[0]);  // Parse extracted object
-            let msg = `${parsedData.Nethindu}`;
+            let msg = `hi-${parsedData.Nethindu}`;
             await citel.reply(msg);
         }
     }
