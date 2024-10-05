@@ -2,8 +2,9 @@ const { cmd } = require('../command');
 const axios = require('axios');
 
 cmd({
-        pattern: "Nethindu",
+        pattern: "nt",
         desc: "Sends info about repo.",
+        react:"💝",
         category: "general",
         filename: __filename,
     },
