@@ -10,12 +10,10 @@ cmd({
     },
     async (Void, citel) => {
         let { data } = await axios.get('https://raw.githubusercontent.com/Eboxsl/ELAUTO/refs/heads/main/publicconfig.js');
-        let match = data.match(/{.*}/s);  // Extracts JSON-like object
+            let msg = `${data.Nethindu}`
 
-        if (match) {
-            let parsedData = JSON.parse(match[0]);  // Parse extracted object
-            let msg = `hi-${parsedData.Nethindu}`;
-            await citel.reply(msg);
+            await conn.sendMessage(m.chat, { text: msg }, { quoted: m });
+
         }
     }
 );
