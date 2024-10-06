@@ -10,9 +10,8 @@ cmd({
     },
     async (Void, citel) => {
         let { data } = await axios.get('https://raw.githubusercontent.com/Eboxsl/ELAUTO/refs/heads/main/publicconfig.js');
-            let msg = `${data.Nethindu}`
 
-            await conn.sendMessage(m.chat, { text: msg }, { quoted: m });
+            await conn.sendMessage(m.chat, { text: data.Nethindu }, { quoted: m });
 
         }
     }
