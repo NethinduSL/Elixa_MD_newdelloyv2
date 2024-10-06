@@ -4,15 +4,19 @@ const axios = require('axios');
 cmd({
         pattern: "nt",
         desc: "Sends info about repo.",
-        react:"💝",
+        react: "💝",
         category: "general",
         filename: __filename,
     },
     async (Void, citel) => {
-        let { data } = await axios.get('https://raw.githubusercontent.com/Eboxsl/ELAUTO/refs/heads/main/publicconfig.js');
-
-            await conn.sendMessage(m.chat, { text: data.Nethindu }, { quoted: m });
-
+        try {
+            let { data } = await axios.get('https://raw.githubusercontent.com/Eboxsl/ELAUTO/refs/heads/main/publicconfig.js');
+            let msg = data.Nethindu;
+            console.log(msg);
+            
+            await conn.sendMessage(citel.chat, { text: msg }, { quoted: citel });
+        } catch (error) {
+            console.error("Error fetching data: ", error);
         }
     }
 );
